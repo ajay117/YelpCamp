@@ -19,7 +19,7 @@ db.once("open", () => {
 
 const app = express();
 
-const validateSchema = function (req, res, next) {
+const validateCampground = function (req, res, next) {
   const { error } = campgroundSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((elem) => elem.message).join(",");
@@ -55,7 +55,7 @@ app.get("/campgrounds/new", (req, res) => {
 
 app.post(
   "/campgrounds",
-  validateSchema,
+  validateCampground,
   catchAsync(async (req, res, next) => {
     const campground = new Campground(req.body.campground);
     await campground.save();
@@ -82,6 +82,7 @@ app.get(
 
 app.put(
   "/campgrounds/:id",
+  validateCampground,
   catchAsync(async (req, res) => {
     const id = req.params.id;
     await Campground.findByIdAndUpdate(id, { ...req.body.campground });
