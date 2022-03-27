@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const { campgroundSchema } = require("./schemas");
+const { campgroundSchema, reviewSchema } = require("./schemas");
 const catchAsync = require("./utils/catchAsync");
 const mongoose = require("mongoose");
 const Campground = require("./models/campground");
@@ -21,6 +21,18 @@ const app = express();
 
 const validateCampground = function (req, res, next) {
   const { error } = campgroundSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((elem) => elem.message).join(",");
+    throw new ExpressError(msg, 400);
+  } else {
+    next();
+  }
+};
+
+const validateReview = function (req, res, next) {
+  console.log(req.body);
+  const { error } = reviewSchema.validate(req.body);
+  // console.log(error);
   if (error) {
     const msg = error.details.map((elem) => elem.message).join(",");
     throw new ExpressError(msg, 400);
@@ -101,6 +113,7 @@ app.delete(
 
 app.post(
   "/campgrounds/:id/reviews",
+  validateReview,
   catchAsync(async (req, res) => {
     const campground = await Campground.findById(req.params.id);
     const review = new Review(req.body.review);
