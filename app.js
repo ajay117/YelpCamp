@@ -30,9 +30,7 @@ const validateCampground = function (req, res, next) {
 };
 
 const validateReview = function (req, res, next) {
-  console.log(req.body);
   const { error } = reviewSchema.validate(req.body);
-  // console.log(error);
   if (error) {
     const msg = error.details.map((elem) => elem.message).join(",");
     throw new ExpressError(msg, 400);
