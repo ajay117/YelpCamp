@@ -55,6 +55,7 @@ router.get(
 
 router.get(
   "/:id/edit",
+  isLoggedIn,
   catchAsync(async (req, res) => {
     const id = req.params.id;
     const campground = await Campground.findById(id);

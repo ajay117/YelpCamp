@@ -58,6 +58,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 app.use((req, res, next) => {
+  console.log(req.session);
   res.locals.currentUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
