@@ -1,3 +1,9 @@
+if (process.env.NODE_Env !== "production") {
+  require("dotenv").config();
+}
+
+console.log(process.env.SECRET);
+
 const express = require("express");
 const path = require("path");
 const methodOverride = require("method-override");
