@@ -11,6 +11,7 @@ module.exports.campgroundSchema = Joi.object({
       filename: Joi.string().required(),
     },
   },
+  deleteImages: Joi.array(),
 });
 
 module.exports.reviewSchema = Joi.object({
