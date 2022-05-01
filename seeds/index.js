@@ -16,7 +16,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
   await Campground.deleteMany();
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 200; i++) {
     const randomImage = images[Math.floor(Math.random() * 3)];
     const random1000 = Math.floor(Math.random() * 1000);
     const camp = new Campground({
